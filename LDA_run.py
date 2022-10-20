@@ -126,7 +126,17 @@ def test_func(file_path):
     index = 0
     while index < len(doc_topics):
         content = docSet.docs[index]
-        print('index', index, content, 'topics', doc_topics[index])
+
+        max_pro = 0
+        max_id = -1
+        for elems in doc_topics[index]:
+            prob = elems[1]
+            t_id = elems[0]
+            if prob > max_pro:
+                max_id = t_id
+                max_pro = prob
+
+        print('index', index, content, 'topic_'+str(max_id))
         index += 1
 
 

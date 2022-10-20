@@ -125,7 +125,9 @@ def test_func(file_path):
 
     index = 0
     while index < len(doc_topics):
-        content = docSet.docs[index]
+        content = docSet.source_docs[index]
+        content_tokens = docSet.docs[index]
+
 
         max_pro = 0
         max_id = -1
@@ -136,7 +138,7 @@ def test_func(file_path):
                 max_id = t_id
                 max_pro = prob
 
-        print('index', index, content, 'topic_'+str(max_id))
+        print('index_'+str(index), 'topic:'+str(max_id), content_tokens, 'contents:'+content)
         index += 1
 
 

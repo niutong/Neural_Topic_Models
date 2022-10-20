@@ -29,6 +29,7 @@ class DocDataset(Dataset):
         self.bows,self.docs = None,None
         self.use_tfidf = use_tfidf
         self.tfidf,self.tfidf_model = None,None
+        self.source_docs = []
         if not os.path.exists(tmpDir):
             os.mkdir(tmpDir)
         if not rebuild and os.path.exists(os.path.join(tmpDir,'corpus.mm')):
@@ -47,7 +48,16 @@ class DocDataset(Dataset):
             if tokenizer is None:
                 tokenizer = globals()[LANG_CLS[lang]](stopwords=stopwords)
             self.docs = tokenizer.tokenize(self.txtLines)
+
+            doc_start = 0
+            for line in self.docs:
+                if line!=[]:
+                    self.source_docs.append(self.txtLines[doc_start])
+                else:
+                    doc_start += 1
+
             self.docs = [line for line in self.docs if line!=[]]
+
             # build dictionary
             self.dictionary = Dictionary(self.docs)
             #self.dictionary.filter_n_most_frequent(remove_n=20)

@@ -104,5 +104,31 @@ def main():
     logger.info(f'topic diversity: {topic_diversity}')
     print(f'topic diversity: {topic_diversity}')
 
+
+def test_func(file_path):
+    global args
+
+    taskname = args.taskname
+    no_below = args.no_below
+    no_above = args.no_above
+    rebuild = args.rebuild
+    n_topic = args.n_topic
+
+    docSet = DocDataset(taskname,no_below=no_below,no_above=no_above,rebuild=rebuild)
+    lda_model = gensim.models.ldamodel.LdaModel.load('ckpt/'+ file_path)
+    topic_words = get_topic_words(model=lda_model,n_topic=n_topic,topn=15,vocab=docSet.dictionary)
+
+    for idx,words in enumerate(topic_words):
+        print(f'##{idx:>3d}:{words}')
+
+    index = 0
+    while index < len(docSet.docs):
+        content = docSet.docs[index]
+        topic_index = lda_model(docSet.docs)
+        print('index', index, content, 'topics', topic_index)
+        index += 1
+
+
 if __name__ == '__main__':
-    main()
+    # main()
+    test_func('LDA_good_content_male_tp20_2022-10-20-16-07.ckpt')

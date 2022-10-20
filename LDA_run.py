@@ -121,11 +121,12 @@ def test_func(file_path):
     for idx,words in enumerate(topic_words):
         print(f'##{idx:>3d}:{words}')
 
+    doc_topics = lda_model.get_document_topics(docSet.bows)
+
     index = 0
-    while index < len(docSet.docs):
+    while index < len(doc_topics):
         content = docSet.docs[index]
-        topic_index = lda_model(docSet.docs)
-        print('index', index, content, 'topics', topic_index)
+        print('index', index, content, 'topics', doc_topics[index])
         index += 1
 
 

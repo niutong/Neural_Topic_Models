@@ -24,7 +24,7 @@ class DocDataset(Dataset):
         cwd = os.getcwd()
         txtPath = os.path.join(cwd,'data',f'{taskname}_lines.txt') if txtPath==None else txtPath
         tmpDir = os.path.join(cwd,'data',taskname)
-        self.txtLines = [line.strip('\n') for line in open(txtPath,'r',encoding='utf-8')]
+        self.txtLines = [line.strip('\n') for line in open(txtPath,'r',encoding='utf-8', errors='ignore')]
         self.dictionary = None
         self.bows,self.docs = None,None
         self.use_tfidf = use_tfidf
